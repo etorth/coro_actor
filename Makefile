@@ -18,7 +18,7 @@ $(TARGET): $(OBJS)
 	$(CXX) $^ -o $@ $(CXXFLAGS)
 
 %.o: %.cpp
-	$(CXX) -c $< -o $@ $(CXXFLAGS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 -include $(DEPENDS)
 

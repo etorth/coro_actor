@@ -81,7 +81,7 @@ class Actor
             : m_pool(pool)
             , m_address(address)
             , m_createTime(tstamp())
-            , m_name(randstr(7))
+            , m_name(randstr(6))
         {}
 
         int getAddress() const

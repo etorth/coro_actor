@@ -40,11 +40,6 @@ struct MessagePack
 {
     int type = 0;
     std::string content {};
-
-    std::string str() const
-    {
-        return str_printf("MessagePack(type: %-*s, content: %s)", msgTypeStrMaxLength(), msgTypeStr(type), content.empty() ? "(empty)" : content.c_str());
-    }
 };
 
 struct Message
@@ -58,7 +53,7 @@ struct Message
 
     std::string str() const
     {
-        return str_printf("Message(type: %-*s, content: %s, from: %2d, seqID: %2d, respID: %2d)", msgTypeStrMaxLength(), msgTypeStr(type), content.empty() ? "(empty)" : content.c_str(), from, seqID, respID);
+        return str_printf("Message(type: %-*s, content: %6s, from: %2d, seqID: %2d, respID: %2d)", msgTypeStrMaxLength(), msgTypeStr(type), content.c_str(), from, seqID, respID);
     }
 
     std::pair<int, int> fromAddr() const

@@ -20,7 +20,7 @@ FreeMsgCoro Actor::on_MPK_HELLO(Message msg)
         post(msg.fromAddr(), MessagePack
         {
             .type = MPK_STRING,
-            .content = "master.",
+            .content = "master",
         });
     }
     else{
@@ -33,14 +33,14 @@ FreeMsgCoro Actor::on_MPK_HELLO(Message msg)
             post(msg.fromAddr(), MessagePack
             {
                 .type = MPK_STRING,
-                .content = "friend.",
+                .content = "friend",
             });
         }
         else{
             post(msg.fromAddr(), MessagePack
             {
                 .type = MPK_STRING,
-                .content = "little.",
+                .content = "little",
             });
         }
     }

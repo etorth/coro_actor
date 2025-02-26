@@ -12,10 +12,10 @@ ThreadPool::ThreadPool(size_t numThreads)
                     std::unique_lock<std::mutex> lock(this->m_queueLock);
                     this->m_cond.wait(lock, [this]
                     {
-                        return this->stop || !this->m_pendingActors.empty();
+                        return this->m_stop || !this->m_pendingActors.empty();
                     });
 
-                    if(this->stop && this->m_pendingActors.empty()){
+                    if(this->m_stop && this->m_pendingActors.empty()){
                         return;
                     }
 
@@ -40,16 +40,16 @@ void ThreadPool::registerActor(Actor *actor)
     });
 
     {
-        const std::unique_lock<std::mutex> lock(actorsMutex);
-        actors[actor->getAddress()] = actor;
+        const std::unique_lock<std::mutex> lock(m_actorsLock);
+        m_actors[actor->getAddress()] = actor;
     }
     scheduleActor(actor);
 }
 
 Actor *ThreadPool::getActor(int address)
 {
-    std::unique_lock<std::mutex> lock(actorsMutex);
-    if(auto p = actors.find(address); p != actors.end()){
+    const std::unique_lock<std::mutex> lock(m_actorsLock);
+    if(auto p = m_actors.find(address); p != m_actors.end()){
         return p->second;
     }
     else{
@@ -61,7 +61,7 @@ void ThreadPool::scheduleActor(Actor *actor)
 {
     {
         std::unique_lock<std::mutex> lock(m_queueLock);
-        if (stop){
+        if(m_stop){
             throw std::runtime_error("enqueue on stopped ThreadPool");
         }
         m_pendingActors.push(actor);

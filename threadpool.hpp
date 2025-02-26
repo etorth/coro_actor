@@ -16,19 +16,21 @@ class ThreadPool
         std::queue<Actor *> m_pendingActors;
         std::mutex m_queueLock;
         std::condition_variable m_cond;
-        bool stop = false;
+        bool m_stop = false;
 
-        std::unordered_map<int, Actor *> actors;
-        std::mutex actorsMutex;
+    private:
+        std::mutex m_actorsLock;
+        std::unordered_map<int, Actor *> m_actors;
 
     public:
         ThreadPool(size_t);
         ~ThreadPool()
         {
             {
-                std::unique_lock<std::mutex> lock(m_queueLock);
-                stop = true;
+                const std::unique_lock<std::mutex> lock(m_queueLock);
+                m_stop = true;
             }
+
             m_cond.notify_all();
             for (std::thread &worker : m_workers){
                 worker.join();

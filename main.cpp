@@ -31,8 +31,8 @@ int main(int argc, char **argv)
 
     std::getchar();
 
-    actors.clear();
     pool.reset();
+    actors.clear();
 
     printMessage("Gracefully exiting main\n");
     return 0;

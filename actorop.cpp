@@ -20,7 +20,7 @@ FreeMsgCoro Actor::on_MPK_HELLO(Message msg)
         post(msg.fromAddr(), MessagePack
         {
             .type = MPK_STRING,
-            .content = str_printf("Hi master %d, I am %d", msg.from, getAddress()),
+            .content = "master.",
         });
     }
     else{
@@ -33,14 +33,14 @@ FreeMsgCoro Actor::on_MPK_HELLO(Message msg)
             post(msg.fromAddr(), MessagePack
             {
                 .type = MPK_STRING,
-                .content = str_printf("Hi friend %d, I am %d", msg.from, getAddress()),
+                .content = "friend.",
             });
         }
         else{
             post(msg.fromAddr(), MessagePack
             {
                 .type = MPK_STRING,
-                .content = str_printf("Hi little %d, I am %d", msg.from, getAddress()),
+                .content = "little.",
             });
         }
     }
@@ -52,16 +52,6 @@ FreeMsgCoro Actor::on_MPK_QUERYNAME(Message msg)
     {
         .type = MPK_STRING,
         .content = m_name,
-    });
-    return {};
-}
-
-FreeMsgCoro Actor::on_MPK_QUERYCREATETIME(Message msg)
-{
-    post(msg.fromAddr(), MessagePack
-    {
-        .type = MPK_STRING,
-        .content = str_printf("%llu", m_createTime),
     });
     return {};
 }

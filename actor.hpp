@@ -81,7 +81,7 @@ class Actor
             : m_pool(pool)
             , m_address(address)
             , m_createTime(tstamp())
-            , m_name(randstr(8))
+            , m_name(randstr(7))
         {}
 
         int getAddress() const
@@ -115,8 +115,7 @@ class Actor
         void        onCoroMessage(Message);
 
     private:
-        FreeMsgCoro on_MPK_INIT           (Message);
-        FreeMsgCoro on_MPK_HELLO          (Message);
-        FreeMsgCoro on_MPK_QUERYNAME      (Message);
-        FreeMsgCoro on_MPK_QUERYCREATETIME(Message);
+        FreeMsgCoro on_MPK_INIT     (Message);
+        FreeMsgCoro on_MPK_HELLO    (Message);
+        FreeMsgCoro on_MPK_QUERYNAME(Message);
 };

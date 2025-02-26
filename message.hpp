@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <string_view>
 #include "utils.hpp"
 
 enum MsgType: int
@@ -9,22 +10,30 @@ enum MsgType: int
     MPK_INIT,
     MPK_HELLO,
     MPK_QUERYNAME,
-    MPK_QUERYCREATETIME,
     MPK_STRING,
+    MPK_END,
 };
 
 inline const char *msgTypeStr(int type)
 {
     switch(type){
-        case MPK_NONE           : return "MPK_NONE";
-        case MPK_BADADDR        : return "MPK_BADADDR";
-        case MPK_INIT           : return "MPK_INIT";
-        case MPK_HELLO          : return "MPK_HELLO";
-        case MPK_QUERYNAME      : return "MPK_QUERYNAME";
-        case MPK_QUERYCREATETIME: return "MPK_QUERYCREATETIME";
-        case MPK_STRING         : return "MPK_STRING";
-        default                 : return "UNKNOWN";
+        case MPK_NONE     : return "MPK_NONE";
+        case MPK_BADADDR  : return "MPK_BADADDR";
+        case MPK_INIT     : return "MPK_INIT";
+        case MPK_HELLO    : return "MPK_HELLO";
+        case MPK_QUERYNAME: return "MPK_QUERYNAME";
+        case MPK_STRING   : return "MPK_STRING";
+        default           : return "UNKNOWN";
     }
+}
+
+constexpr int msgTypeStrMaxLength()
+{
+    int maxLen = 0;
+    for(int n = MPK_NONE; n < MPK_END; ++n){
+        maxLen = std::max<int>(maxLen, std::string_view(msgTypeStr(n)).size());
+    }
+    return maxLen;
 }
 
 struct MessagePack
@@ -34,7 +43,7 @@ struct MessagePack
 
     std::string str() const
     {
-        return str_printf("MessagePack(type: %s, content: %s)", msgTypeStr(type), content.empty() ? "(empty)" : content.c_str());
+        return str_printf("MessagePack(type: %-*s, content: %s)", msgTypeStrMaxLength(), msgTypeStr(type), content.empty() ? "(empty)" : content.c_str());
     }
 };
 
@@ -49,7 +58,7 @@ struct Message
 
     std::string str() const
     {
-        return str_printf("Message(type: %s, content: %s, from: %d, seqID: %d, respID: %d)", msgTypeStr(type), content.empty() ? "(empty)" : content.c_str(), from, seqID, respID);
+        return str_printf("Message(type: %-*s, content: %s, from: %2d, seqID: %2d, respID: %2d)", msgTypeStrMaxLength(), msgTypeStr(type), content.empty() ? "(empty)" : content.c_str(), from, seqID, respID);
     }
 
     std::pair<int, int> fromAddr() const

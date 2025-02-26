@@ -80,11 +80,10 @@ void Actor::consumeMessages()
 FreeMsgCoro Actor::onFreeMessage(Message msg)
 {
     switch(msg.type){
-        case MPK_INIT           : return on_MPK_INIT           (std::move(msg));
-        case MPK_HELLO          : return on_MPK_HELLO          (std::move(msg));
-        case MPK_QUERYNAME      : return on_MPK_QUERYNAME      (std::move(msg));
-        case MPK_QUERYCREATETIME: return on_MPK_QUERYCREATETIME(std::move(msg));
-        default                 : throw std::runtime_error(str_printf("Unknown message: %s", msg.str().c_str()));
+        case MPK_INIT     : return on_MPK_INIT     (std::move(msg));
+        case MPK_HELLO    : return on_MPK_HELLO    (std::move(msg));
+        case MPK_QUERYNAME: return on_MPK_QUERYNAME(std::move(msg));
+        default           : throw  std::runtime_error(str_printf("Unknown message: %s", msg.str().c_str()));
     }
 }
 

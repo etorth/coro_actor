@@ -19,7 +19,7 @@ class FreeMsgCoro
                 return {std::coroutine_handle<promise_type>::from_promise(*this)};
             }
 
-            std::suspend_always     initial_suspend() noexcept { return {}; }
+            std::suspend_always   initial_suspend() noexcept { return {}; }
             FreeMsgCoroFinalAwaiter final_suspend() noexcept { return {}; }
 
             void return_void() {}

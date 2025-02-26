@@ -25,7 +25,7 @@ struct SendMsgCoroPromise
     SendMsgCoro get_return_object() noexcept;
     void return_value(Message);
 
-    std::suspend_always         initial_suspend() const noexcept { return {}; }
+    std::suspend_always          initial_suspend() const noexcept { return {}; }
     SendMsgCoroPromiseFinalAwaiter final_suspend() const noexcept { return {}; }
 
 

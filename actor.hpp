@@ -55,7 +55,7 @@ class Actor
         }
 
     private:
-        struct SendMsgAwaitable
+        struct SendMsgAwaiter
         {
             Actor *actor;
             const int seqID;

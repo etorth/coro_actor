@@ -5,7 +5,7 @@
 class FreeMsgCoro
 {
     public:
-        struct FreeMsgCoroFinalAwaitable
+        struct FreeMsgCoroFinalAwaiter
         {
             bool await_ready  ()       const noexcept { return false; }
             void await_suspend(auto h) const noexcept { h.destroy() ; }
@@ -20,7 +20,7 @@ class FreeMsgCoro
             }
 
             std::suspend_always     initial_suspend() noexcept { return {}; }
-            FreeMsgCoroFinalAwaitable final_suspend() noexcept { return {}; }
+            FreeMsgCoroFinalAwaiter final_suspend() noexcept { return {}; }
 
             void return_void() {}
             void unhandled_exception() { std::terminate(); }

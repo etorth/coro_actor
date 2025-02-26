@@ -17,13 +17,13 @@ void SendMsgCoroPromise::return_value(Message msg)
     actor->updateLastMsg(std::move(msg));
 }
 
-void SendMsgCoroAwaitable::await_suspend(std::coroutine_handle<> h) noexcept
+void SendMsgCoroAwaiter::await_suspend(std::coroutine_handle<> h) noexcept
 {
     handle.promise().continuation = h;
     handle.resume();
 }
 
-Message SendMsgCoroAwaitable::await_resume() noexcept
+Message SendMsgCoroAwaiter::await_resume() noexcept
 {
     return handle.promise().actor->getLastMsg().value();
 }

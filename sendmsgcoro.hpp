@@ -35,7 +35,7 @@ struct SendMsgCoroPromise
     }
 };
 
-struct SendMsgCoroAwaitable
+struct SendMsgCoroAwaiter
 {
     std::coroutine_handle<SendMsgCoroPromise> handle;
 
@@ -57,7 +57,7 @@ struct SendMsgCoro
         : handle(h)
     {}
 
-    SendMsgCoroAwaitable operator co_await() && noexcept
+    SendMsgCoroAwaiter operator co_await() && noexcept
     {
         return {handle};
     }

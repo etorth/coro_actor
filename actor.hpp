@@ -19,11 +19,10 @@ class Actor
         friend class ThreadPool;
 
     private:
-        ThreadPool& m_pool;
+        ThreadPool &m_pool;
 
     private:
         const int m_address;
-        const long m_createTime;
         const std::string m_name;
 
     private:
@@ -32,30 +31,17 @@ class Actor
 
     private:
         std::atomic_flag m_processing;
-        std::atomic<int> m_sequence {1}; // Start sequence from 1, as 0 will be used for messages that don't need a response
+        std::atomic<int> m_sequence {1}; // start sequence from 1, as 0 is used for messages that don't need a response
 
     private:
         std::unordered_map<int, std::coroutine_handle<SendMsgCoro::promise_type>> m_respHandlerList;
 
     private:
-        size_t m_msgCount = 0;
-        std::optional<Message> m_lastMsg {};
-        std::vector<std::string> m_replyList {};
-
-    public:
-        void updateLastMsg(Message msg)
-        {
-            m_msgCount++;
-            m_lastMsg = std::move(msg);
-        }
-
-        std::optional<Message> getLastMsg() const
-        {
-            return m_lastMsg;
-        }
+        size_t m_recvMsgCount = 0; // micmic that message can change actor's internal state, no functional usage
+        size_t m_replyCharCount = 0;
 
     private:
-        struct SendMsgAwaiter
+        struct RegisterContinuationAwaiter
         {
             Actor *actor;
             const int seqID;
@@ -70,17 +56,13 @@ class Actor
                 actor->m_respHandlerList.emplace(seqID, handle);
             }
 
-            Message await_resume()
-            {
-                return actor->m_lastMsg.value();
-            }
+            void await_resume(){}
         };
 
     public:
-        Actor(ThreadPool& pool, int address)
+        Actor(ThreadPool &pool, int address)
             : m_pool(pool)
             , m_address(address)
-            , m_createTime(tstamp())
             , m_name(randstr(6))
         {}
 

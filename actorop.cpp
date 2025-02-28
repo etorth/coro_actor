@@ -9,7 +9,7 @@ FreeMsgCoro Actor::on_MPK_INIT(Message)
             {
                 .type = MPK_HELLO,
             });
-            m_replyList.push_back(std::move(reply.content));
+            m_replyCharCount += reply.content.size();
         }
     }
 }

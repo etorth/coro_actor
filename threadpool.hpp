@@ -14,6 +14,8 @@ class ThreadPool
     private:
         std::vector<std::thread> m_workers;
         std::queue<Actor *> m_pendingActors;
+
+    private:
         std::mutex m_queueLock;
         std::condition_variable m_cond;
         bool m_stop = false;

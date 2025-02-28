@@ -12,11 +12,6 @@ SendMsgCoro SendMsgCoroPromise::get_return_object() noexcept
     return {std::coroutine_handle<SendMsgCoroPromise>::from_promise(*this)};
 }
 
-void SendMsgCoroPromise::return_value(Message msg)
-{
-    actor->updateLastMsg(std::move(msg));
-}
-
 void SendMsgCoroAwaiter::await_suspend(std::coroutine_handle<> h) noexcept
 {
     handle.promise().continuation = h;
@@ -25,5 +20,8 @@ void SendMsgCoroAwaiter::await_suspend(std::coroutine_handle<> h) noexcept
 
 Message SendMsgCoroAwaiter::await_resume() noexcept
 {
-    return handle.promise().actor->getLastMsg().value();
+    return handle.promise().reply.value_or(Message
+    {
+        .type = MPK_BADADDR,
+    });
 }

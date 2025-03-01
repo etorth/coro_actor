@@ -35,6 +35,7 @@ inline std::string randstr(size_t length)
 
 inline void printMessage(const char * [[maybe_unused]] format, ...)
 {
+#ifndef DISABLE_PRINT
     static std::mutex coutMutex;
     const  std::lock_guard<std::mutex> lock(coutMutex);
     va_list args;
@@ -42,4 +43,5 @@ inline void printMessage(const char * [[maybe_unused]] format, ...)
     vprintf(format, args);
     va_end(args);
     fflush(stdout); // Flush the output buffer
+#endif
 }

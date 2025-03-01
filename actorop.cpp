@@ -9,7 +9,16 @@ FreeMsgCoro Actor::on_MPK_INIT(Message)
             {
                 .type = MPK_HELLO,
             });
-            m_replyCharCount += reply.content.size();
+
+            // reply message can be used to update actor's internal state
+            // an example shows how reply gets consumed
+
+            if(reply.type == MPK_BADADDR){
+                m_badAddrCount++;
+            }
+            else{
+                m_replyCharCount += reply.content.size();
+            }
         }
     }
 }

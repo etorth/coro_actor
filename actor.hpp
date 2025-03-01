@@ -38,6 +38,7 @@ class Actor
 
     private:
         size_t m_recvMsgCount = 0; // micmic that message can change actor's internal state, no functional usage
+        size_t m_badAddrCount = 0;
         size_t m_replyCharCount = 0;
 
     private:

@@ -22,11 +22,6 @@ inline std::string str_printf(const char *format, ...)
     return std::string(buffer);
 }
 
-inline long tstamp()
-{
-    return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-}
-
 inline std::string randstr(size_t length)
 {
     std::string s;

@@ -86,4 +86,7 @@ void Actor::onCoroMessage(Message msg)
         p->second.resume();
         m_respHandlerList.erase(p);
     }
+    else{
+        throw std::runtime_error(str_printf("No handler for response: %s", msg.str().c_str()));
+    }
 }

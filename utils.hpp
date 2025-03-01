@@ -33,7 +33,7 @@ inline std::string randstr(size_t length)
     return s;
 }
 
-inline void printMessage(const char *format, ...)
+inline void printMessage(const char * [[maybe_unused]] format, ...)
 {
     static std::mutex coutMutex;
     const  std::lock_guard<std::mutex> lock(coutMutex);

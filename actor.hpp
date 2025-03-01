@@ -1,9 +1,6 @@
 #pragma once
-#include <condition_variable>
 #include <unordered_map>
 #include <stdexcept>
-#include <cstdio>
-#include <cstdarg>
 #include <atomic>
 #include <optional>
 

@@ -33,6 +33,7 @@ int main(int argc, char **argv)
         pool->registerActor(actors.back().get());
     }
 
+    std::printf("Press any key to exit.\n");
     std::getchar();
 
     pool.reset();

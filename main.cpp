@@ -12,6 +12,7 @@
 #include "message.hpp"
 #include "threadpool.hpp"
 #include "actor.hpp"
+#include "utils.hpp"
 
 std::unique_ptr<ThreadPool> pool;
 std::vector<std::unique_ptr<Actor>> actors;
@@ -19,7 +20,7 @@ std::vector<std::unique_ptr<Actor>> actors;
 int main(int argc, char **argv)
 {
     std::srand(std::time(nullptr));
-    printMessage("Press any key to start, pid %ld\n\n", static_cast<long>(getpid()));
+    std::printf("Press any key to start, pid %ld\n\n", static_cast<long>(getpid()));
     std::getchar();
 
     const int threadNum = argc > 1 ? std::stoi(argv[1]) :  4;
@@ -37,6 +38,6 @@ int main(int argc, char **argv)
     pool.reset();
     actors.clear();
 
-    printMessage("Gracefully exiting main\n");
+    std::printf("Gracefully exiting main\n");
     return 0;
 }

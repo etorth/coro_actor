@@ -13,6 +13,10 @@ ifeq ($(ENABLE_ASAN), 1)
     DEBUG_FLAGS += -fsanitize=address
 endif
 
+ifeq ($(DISABLE_PRINT), 1)
+    DEBUG_FLAGS += -DDISABLE_PRINT
+endif
+
 CXXFLAGS := $(WARNINGS) $(DEBUG_FLAGS) -std=$(STD) -MMD -MP -pthread
 
 .PHONY: all clean

@@ -40,7 +40,10 @@ class ThreadPool
         }
 
     public:
-        void registerActor(Actor *);
+        void   registerActor(Actor *);
+        void deregisterActor(int);
+
+    public:
         Actor *getActor(int address);
 
     public:

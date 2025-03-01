@@ -46,6 +46,14 @@ void ThreadPool::registerActor(Actor *actor)
     scheduleActor(actor);
 }
 
+void ThreadPool::deregisterActor(int addr)
+{
+    const std::unique_lock<std::mutex> lockGuard(m_actorsLock);
+    if(auto p = m_actors.find(addr); p != m_actors.end()){
+        m_actors.erase(p);
+    }
+}
+
 Actor *ThreadPool::getActor(int address)
 {
     const std::unique_lock<std::mutex> lock(m_actorsLock);

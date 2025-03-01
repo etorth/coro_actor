@@ -8,7 +8,7 @@ DEPENDS := $(OBJS:.o=.d)
 
 DEBUG_FLAGS := -g3 -DDEBUG -O0 -fno-omit-frame-pointer
 WARNINGS := -Wall -Wextra -Wpedantic
-CXXFLAGS := $(WARNINGS) $(DEBUG_FLAGS) -std=$(STD) -MMD -MP
+CXXFLAGS := $(WARNINGS) $(DEBUG_FLAGS) -std=$(STD) -MMD -MP -pthread
 
 ifeq ($(ENABLE_ASAN), 1)
     DEBUG_FLAGS += -fsanitize=address

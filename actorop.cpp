@@ -49,7 +49,7 @@ FreeMsgCoro Actor::on_MPK_HELLO(Message msg)
             post(msg.fromAddr(), MessagePack
             {
                 .type = MPK_STRING,
-                .content = "little",
+                .content = "stupid",
             });
         }
     }

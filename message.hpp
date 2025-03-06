@@ -40,6 +40,11 @@ struct MessagePack
 {
     int type = 0;
     std::string content {};
+
+    std::string str() const
+    {
+        return str_printf("MsgPack(type: %-*s, content: %6s)", msgTypeStrMaxLength(), msgTypeStr(type), content.c_str());
+    }
 };
 
 struct Message

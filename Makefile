@@ -1,6 +1,7 @@
-CXX := g++-14
+CXX := g++
 STD := c++26
 TARGET := a.out
+ASIO_INCDIR := /usr/local/include
 
 SRCS := $(wildcard *.cpp)
 OBJS := $(SRCS:.cpp=.o)
@@ -17,7 +18,7 @@ ifeq ($(DISABLE_PRINT), 1)
     DEBUG_FLAGS += -DDISABLE_PRINT
 endif
 
-CXXFLAGS := $(WARNINGS) $(DEBUG_FLAGS) -std=$(STD) -MMD -MP -pthread
+CXXFLAGS := $(WARNINGS) $(DEBUG_FLAGS) -std=$(STD) -MMD -MP -pthread -I$(ASIO_INCDIR)
 
 .PHONY: all clean
 

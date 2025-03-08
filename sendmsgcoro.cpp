@@ -1,5 +1,4 @@
 #include "sendmsgcoro.hpp"
-#include "actor.hpp"
 
 void SendMsgCoroPromiseFinalAwaiter::await_suspend(std::coroutine_handle<SendMsgCoroPromise> handle) noexcept
 {

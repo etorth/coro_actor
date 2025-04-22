@@ -41,17 +41,19 @@ class Actor
     private:
         struct RegisterContinuationAwaiter
         {
-            Actor * const actor;
-            int     const seqID;
+            Actor *            const actor;
+            std::optional<int> const seqID;
 
             bool await_ready() const
             {
-                return false;
+                return !seqID.has_value();
             }
 
             void await_suspend(std::coroutine_handle<SendMsgCoro::promise_type> handle)
             {
-                actor->m_respHandlerList.emplace(seqID, handle);
+                if(seqID.has_value()){
+                    actor->m_respHandlerList.emplace(seqID.value(), handle);
+                }
             }
 
             void await_resume(){}

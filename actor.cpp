@@ -32,9 +32,11 @@ bool Actor::post(const std::pair<int, int> &toAddr, MessagePack mpk)
 
 SendMsgCoro Actor::send(const std::pair<int, int> &toAddr, MessagePack mpk)
 {
-    if(const auto seqIDOpt = doPost(toAddr, true, std::move(mpk)); seqIDOpt.has_value()){
-        co_await RegisterContinuationAwaiter{this, seqIDOpt.value()};
-    }
+    co_await RegisterContinuationAwaiter
+    {
+        .actor = this,
+        .seqID = doPost(toAddr, true, std::move(mpk)),
+    };
 }
 
 void Actor::receive(const Message& msg)

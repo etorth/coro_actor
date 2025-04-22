@@ -25,7 +25,6 @@ struct SendMsgCoroPromise
     std::suspend_always          initial_suspend() const noexcept { return {}; }
     SendMsgCoroPromiseFinalAwaiter final_suspend() const noexcept { return {}; }
 
-
     void unhandled_exception()
     {
         std::terminate();

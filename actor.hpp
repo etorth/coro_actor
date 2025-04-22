@@ -41,8 +41,8 @@ class Actor
     private:
         struct RegisterContinuationAwaiter
         {
-            Actor *actor;
-            const int seqID;
+            Actor * const actor;
+            int     const seqID;
 
             bool await_ready() const
             {

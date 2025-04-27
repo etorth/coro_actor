@@ -73,7 +73,7 @@ corof::entrance Actor::on_MPK_QUERYBOOL(Message msg)
     post(msg.fromAddr(), MessagePack
     {
         .type = MPK_STRING,
-        .content = std::to_string(randint() % 100),
+        .content = std::to_string(randint() % 10),
     });
     return {};
 }

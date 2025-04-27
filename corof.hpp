@@ -6,7 +6,7 @@ namespace corof
 {
     class entrance
     {
-        public:
+        private:
             struct EntranceFinalAwaiter
             {
                 bool await_ready  ()       const noexcept { return false; }
@@ -14,6 +14,7 @@ namespace corof
                 void await_resume ()       const noexcept {}
             };
 
+        public:
             struct promise_type
             {
                 entrance get_return_object()

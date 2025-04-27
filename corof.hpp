@@ -84,7 +84,10 @@ namespace corof
                     return {std::coroutine_handle<promise_type>::from_promise(*this)};
                 }
 
-                void return_void() {}
+                void return_value(T t)
+                {
+                    result = t;
+                }
 
                 std::suspend_always        initial_suspend() const noexcept { return {}; }
                 AwaitablePromiseFinalAwaiter final_suspend() const noexcept { return {}; }

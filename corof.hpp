@@ -7,7 +7,7 @@ namespace corof
     class entrance
     {
         private:
-            struct EntranceFinalAwaiter
+            struct EntrancePromiseFinalAwaiter
             {
                 bool await_ready  ()       const noexcept { return false; }
                 void await_suspend(auto h) const noexcept { h.destroy() ; }
@@ -22,8 +22,8 @@ namespace corof
                     return {std::coroutine_handle<promise_type>::from_promise(*this)};
                 }
 
-                std::suspend_always initial_suspend() noexcept { return {}; }
-                EntranceFinalAwaiter  final_suspend() noexcept { return {}; }
+                std::suspend_always       initial_suspend() noexcept { return {}; }
+                EntrancePromiseFinalAwaiter final_suspend() noexcept { return {}; }
 
                 void return_void() {}
                 void unhandled_exception()
@@ -84,7 +84,7 @@ namespace corof
                     return {std::coroutine_handle<promise_type>::from_promise(*this)};
                 }
 
-                void return_void(){}
+                void return_void() {}
 
                 std::suspend_always        initial_suspend() const noexcept { return {}; }
                 AwaitablePromiseFinalAwaiter final_suspend() const noexcept { return {}; }

@@ -10,6 +10,7 @@ enum MsgType: int
     MPK_INIT,
     MPK_HELLO,
     MPK_QUERYNAME,
+    MPK_QUERYBOOL,
     MPK_STRING,
     MPK_END,
 };
@@ -22,6 +23,7 @@ inline const char *msgTypeStr(int type)
         case MPK_INIT     : return "MPK_INIT";
         case MPK_HELLO    : return "MPK_HELLO";
         case MPK_QUERYNAME: return "MPK_QUERYNAME";
+        case MPK_QUERYBOOL: return "MPK_QUERYBOOL";
         case MPK_STRING   : return "MPK_STRING";
         default           : return "UNKNOWN";
     }

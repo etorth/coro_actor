@@ -71,12 +71,36 @@ void Actor::consumeMessages()
     }
 }
 
+corof::awaitable<bool> Actor::queryBool(int addr)
+{
+    const auto msg = co_await send({addr, 0}, MessagePack
+    {
+        .type = MPK_QUERYBOOL,
+    });
+
+    switch(msg.type){
+        case MPK_BADADDR:
+            {
+                co_return false;
+            }
+        case MPK_STRING:
+            {
+                co_return msg.content != "0";
+            }
+        default:
+            {
+                throw std::runtime_error(str_printf("Unknown message: %s", msg.str().c_str()));
+            }
+    }
+}
+
 corof::entrance Actor::onFreeMessage(Message msg)
 {
     switch(msg.type){
         case MPK_INIT     : return on_MPK_INIT     (std::move(msg));
         case MPK_HELLO    : return on_MPK_HELLO    (std::move(msg));
         case MPK_QUERYNAME: return on_MPK_QUERYNAME(std::move(msg));
+        case MPK_QUERYBOOL: return on_MPK_QUERYBOOL(std::move(msg));
         default           : throw  std::runtime_error(str_printf("Unknown message: %s", msg.str().c_str()));
     }
 }

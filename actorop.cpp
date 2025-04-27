@@ -18,6 +18,11 @@ corof::entrance Actor::on_MPK_INIT(Message)
             }
             else{
                 m_replyCharCount += reply.content.size();
+                for(size_t actorCount = m_pool.getActorCount(), i = 0; i < actorCount; ++i){
+                    if(!(co_await queryBool(toAddr))){
+                        break;
+                    }
+                }
             }
         }
     }
@@ -61,6 +66,16 @@ corof::entrance Actor::on_MPK_QUERYNAME(Message msg)
     {
         .type = MPK_STRING,
         .content = m_name,
+    });
+    return {};
+}
+
+corof::entrance Actor::on_MPK_QUERYBOOL(Message msg)
+{
+    post(msg.fromAddr(), MessagePack
+    {
+        .type = MPK_STRING,
+        .content = std::to_string(randint() % 100),
     });
     return {};
 }

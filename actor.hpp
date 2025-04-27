@@ -100,6 +100,9 @@ class Actor
         void consumeMessages();
 
     public:
+        corof::awaitable<bool> queryBool(int);
+
+    public:
         corof::entrance onFreeMessage(Message);
         void            onCoroMessage(Message);
 
@@ -107,4 +110,5 @@ class Actor
         corof::entrance on_MPK_INIT     (Message);
         corof::entrance on_MPK_HELLO    (Message);
         corof::entrance on_MPK_QUERYNAME(Message);
+        corof::entrance on_MPK_QUERYBOOL(Message);
 };

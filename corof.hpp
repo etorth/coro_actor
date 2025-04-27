@@ -73,9 +73,7 @@ namespace corof
                         handle.destroy();
                     }
 
-                    void await_resume() noexcept
-                    {
-                    }
+                    void await_resume() const noexcept {}
                 };
 
                 std::optional<T> result;

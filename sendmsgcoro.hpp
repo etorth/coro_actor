@@ -3,9 +3,7 @@
 #include <coroutine>
 #include "message.hpp"
 
-class Actor;
 struct SendMsgCoro;
-
 struct SendMsgCoroPromise;
 struct SendMsgCoroPromiseFinalAwaiter
 {

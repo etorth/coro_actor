@@ -18,10 +18,8 @@ corof::entrance Actor::on_MPK_INIT(Message)
             }
             else{
                 m_replyCharCount += reply.content.size();
-                for(size_t actorCount = m_pool.getActorCount(), i = 0; i < actorCount; ++i){
-                    if(!(co_await queryBool(toAddr))){
-                        break;
-                    }
+                while(co_await queryBool(toAddr)){
+                    continue;
                 }
             }
         }

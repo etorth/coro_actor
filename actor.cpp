@@ -30,7 +30,7 @@ bool Actor::post(const std::pair<int, int> &toAddr, MessagePack mpk)
     return doPost(toAddr, false, std::move(mpk)).has_value();
 }
 
-SendMsgCoro Actor::send(const std::pair<int, int> &toAddr, MessagePack mpk)
+corof::awaitable<Message> Actor::send(const std::pair<int, int> &toAddr, MessagePack mpk)
 {
     co_await RegisterContinuationAwaiter
     {
@@ -84,7 +84,7 @@ corof::entrance Actor::onFreeMessage(Message msg)
 void Actor::onCoroMessage(Message msg)
 {
     if(auto p = m_respHandlerList.find(msg.respID); p != m_respHandlerList.end()){
-        p->second.promise().reply = std::move(msg);
+        p->second.promise().result = std::move(msg);
         p->second.resume();
         m_respHandlerList.erase(p);
     }

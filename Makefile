@@ -1,4 +1,4 @@
-CXX := g++
+CXX := g++-14
 STD := c++26
 TARGET := a.out
 ASIO_INCDIR := /usr/local/include

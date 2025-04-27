@@ -8,7 +8,6 @@
 #include "utils.hpp"
 #include "message.hpp"
 #include "threadpool.hpp"
-#include "sendmsgcoro.hpp"
 
 class Actor
 {
@@ -31,7 +30,7 @@ class Actor
         std::atomic<int> m_sequence {1}; // start sequence from 1, as 0 is used for messages that don't need a response
 
     private:
-        std::unordered_map<int, std::coroutine_handle<SendMsgCoro::promise_type>> m_respHandlerList;
+        std::unordered_map<int, std::coroutine_handle<corof::awaitable<Message>::promise_type>> m_respHandlerList;
 
     private:
         size_t m_recvMsgCount = 0; // micmic that message can change actor's internal state, no functional usage
@@ -49,7 +48,7 @@ class Actor
                 return !seqID.has_value();
             }
 
-            void await_suspend(std::coroutine_handle<SendMsgCoro::promise_type> handle)
+            void await_suspend(std::coroutine_handle<corof::awaitable<Message>::promise_type> handle)
             {
                 if(seqID.has_value()){
                     actor->m_respHandlerList.emplace(seqID.value(), handle);
@@ -82,8 +81,8 @@ class Actor
         }
 
     public:
-        bool        post(const std::pair<int, int> &, MessagePack);
-        SendMsgCoro send(const std::pair<int, int> &, MessagePack);
+        bool                      post(const std::pair<int, int> &, MessagePack);
+        corof::awaitable<Message> send(const std::pair<int, int> &, MessagePack);
 
     private:
         std::optional<int> doPost(const std::pair<int, int> &, bool, MessagePack);

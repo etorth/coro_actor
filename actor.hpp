@@ -45,13 +45,21 @@ class Actor
 
             bool await_ready() const
             {
-                return !seqID.has_value();
+                return false;
             }
 
-            void await_suspend(std::coroutine_handle<corof::awaitable<Message>::promise_type> handle)
+            bool await_suspend(std::coroutine_handle<corof::awaitable<Message>::promise_type> handle)
             {
                 if(seqID.has_value()){
                     actor->m_respHandlerList.emplace(seqID.value(), handle);
+                    return true;
+                }
+                else{
+                    handle.promise().result = Message
+                    {
+                        .type = MPK_BADADDR,
+                    };
+                    return false;
                 }
             }
 

@@ -71,7 +71,7 @@ void Actor::consumeMessages()
     }
 }
 
-FreeMsgCoro Actor::onFreeMessage(Message msg)
+corof::entrance Actor::onFreeMessage(Message msg)
 {
     switch(msg.type){
         case MPK_INIT     : return on_MPK_INIT     (std::move(msg));

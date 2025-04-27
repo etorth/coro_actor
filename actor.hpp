@@ -4,11 +4,11 @@
 #include <atomic>
 #include <optional>
 
+#include "corof.hpp"
 #include "utils.hpp"
 #include "message.hpp"
 #include "threadpool.hpp"
 #include "sendmsgcoro.hpp"
-#include "freemsgcoro.hpp"
 
 class Actor
 {
@@ -93,11 +93,11 @@ class Actor
         void consumeMessages();
 
     public:
-        FreeMsgCoro onFreeMessage(Message);
-        void        onCoroMessage(Message);
+        corof::entrance onFreeMessage(Message);
+        void            onCoroMessage(Message);
 
     private:
-        FreeMsgCoro on_MPK_INIT     (Message);
-        FreeMsgCoro on_MPK_HELLO    (Message);
-        FreeMsgCoro on_MPK_QUERYNAME(Message);
+        corof::entrance on_MPK_INIT     (Message);
+        corof::entrance on_MPK_HELLO    (Message);
+        corof::entrance on_MPK_QUERYNAME(Message);
 };

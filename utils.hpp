@@ -6,16 +6,16 @@
 
 inline int randint()
 {
-    static std::mutex lock;
+    const static std::mutex lock;
     const std::lock_guard<std::mutex> lockGuard(lock);
     return std::rand();
 }
 
 inline std::string str_printf(const char *format, ...)
 {
+    char buffer[1024];
     va_list args;
     va_start(args, format);
-    char buffer[1024];
     std::vsnprintf(buffer, sizeof(buffer), format, args);
     va_end(args);
     return std::string(buffer);
@@ -35,8 +35,8 @@ inline std::string randstr(size_t length)
 inline void printMessage([[maybe_unused]] const char *format, ...)
 {
 #ifndef DISABLE_PRINT
-    static std::mutex coutMutex;
-    const  std::lock_guard<std::mutex> lock(coutMutex);
+    const static std::mutex coutMutex;
+    const std::lock_guard<std::mutex> lock(coutMutex);
     va_list args;
     va_start(args, format);
     vprintf(format, args);

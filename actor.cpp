@@ -108,7 +108,7 @@ corof::entrance Actor::onFreeMessage(Message msg)
 void Actor::onCoroMessage(Message msg)
 {
     if(auto p = m_respHandlerList.find(msg.respID); p != m_respHandlerList.end()){
-        p->second.promise().result = std::move(msg);
+        p->second.promise().return_value(std::move(msg));
         p->second.resume();
         m_respHandlerList.erase(p);
     }

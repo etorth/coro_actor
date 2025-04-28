@@ -55,10 +55,10 @@ class Actor
                     return true;
                 }
                 else{
-                    handle.promise().result = Message
+                    handle.promise().return_value(Message
                     {
                         .type = MPK_BADADDR,
-                    };
+                    });
                     return false;
                 }
             }

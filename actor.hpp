@@ -103,12 +103,12 @@ class Actor
         corof::awaitable<bool> queryBool(int);
 
     public:
-        corof::entrance onFreeMessage(Message);
+        corof::awaitable<> onFreeMessage(Message);
         void            onCoroMessage(Message);
 
     private:
-        corof::entrance on_MPK_INIT     (Message);
-        corof::entrance on_MPK_HELLO    (Message);
-        corof::entrance on_MPK_QUERYNAME(Message);
-        corof::entrance on_MPK_QUERYBOOL(Message);
+        corof::awaitable<> on_MPK_INIT     (Message);
+        corof::awaitable<> on_MPK_HELLO    (Message);
+        corof::awaitable<> on_MPK_QUERYNAME(Message);
+        corof::awaitable<> on_MPK_QUERYBOOL(Message);
 };

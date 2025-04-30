@@ -48,7 +48,7 @@ void Actor::receive(const Message& msg)
         onCoroMessage(msg);
     }
     else{
-        onFreeMessage(msg)();
+        onFreeMessage(msg).resume();
     }
 }
 
@@ -94,7 +94,7 @@ corof::awaitable<bool> Actor::queryBool(int addr)
     }
 }
 
-corof::entrance Actor::onFreeMessage(Message msg)
+corof::awaitable<> Actor::onFreeMessage(Message msg)
 {
     switch(msg.type){
         case MPK_INIT     : return on_MPK_INIT     (std::move(msg));

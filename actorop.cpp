@@ -1,7 +1,7 @@
 #include "actor.hpp"
 #include "utils.hpp"
 
-corof::entrance Actor::on_MPK_INIT(Message)
+corof::awaitable<> Actor::on_MPK_INIT(Message)
 {
     for(const int toAddr: {getAddress() - 1, getAddress() + 1}){
         if(toAddr > 0){
@@ -26,7 +26,7 @@ corof::entrance Actor::on_MPK_INIT(Message)
     }
 }
 
-corof::entrance Actor::on_MPK_HELLO(Message msg)
+corof::awaitable<> Actor::on_MPK_HELLO(Message msg)
 {
     if(msg.from > getAddress()){
         post(msg.fromAddr(), MessagePack
@@ -58,7 +58,7 @@ corof::entrance Actor::on_MPK_HELLO(Message msg)
     }
 }
 
-corof::entrance Actor::on_MPK_QUERYNAME(Message msg)
+corof::awaitable<> Actor::on_MPK_QUERYNAME(Message msg)
 {
     post(msg.fromAddr(), MessagePack
     {
@@ -68,7 +68,7 @@ corof::entrance Actor::on_MPK_QUERYNAME(Message msg)
     return {};
 }
 
-corof::entrance Actor::on_MPK_QUERYBOOL(Message msg)
+corof::awaitable<> Actor::on_MPK_QUERYBOOL(Message msg)
 {
     post(msg.fromAddr(), MessagePack
     {

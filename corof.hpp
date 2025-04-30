@@ -2,6 +2,7 @@
 #include <optional>
 #include <coroutine>
 #include <exception>
+#include <stdexcept>
 
 namespace corof
 {
@@ -162,6 +163,11 @@ namespace corof
             {}
 
         public:
+            awaitable()
+                : m_handle(nullptr)
+            {}
+
+        public:
             awaitable(awaitable && other) noexcept
             {
                 std::swap(m_handle, other.m_handle);
@@ -179,15 +185,22 @@ namespace corof
             awaitable & operator = (const awaitable &) = delete;
 
         public:
-            auto operator co_await() && noexcept
+            auto operator co_await() &&
             {
-                return AwaitableAsAwaiter(m_handle);
+                if(m_handle){
+                    return AwaitableAsAwaiter(m_handle);
+                }
+                else{
+                    throw std::runtime_error("empty coroutine handle");
+                }
             }
 
         public:
             void resume()
             {
-                AwaitableAsAwaiter(m_handle).await_suspend(std::noop_coroutine());
+                if(m_handle){
+                    AwaitableAsAwaiter(m_handle).await_suspend(std::noop_coroutine());
+                }
             }
     };
 }

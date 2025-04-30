@@ -183,5 +183,11 @@ namespace corof
             {
                 return AwaitableAsAwaiter(m_handle);
             }
+
+        public:
+            void resume()
+            {
+                AwaitableAsAwaiter(m_handle).await_suspend(std::noop_coroutine());
+            }
     };
 }
